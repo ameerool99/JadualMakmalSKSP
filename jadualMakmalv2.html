@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jadual Makmal Komputer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #000000;      /* Pink primary color */
+            --primary-light: #1b93d8; /* Lighter pink */
+            --secondary: #8e24aa;    /* Purple accent */
+            --accent: #40b9ff;        /* Bright pink accent */
+            --light: rgba(197, 237, 247, 0.89);        /* Light pink background */
+            --dark: #4a148c;         /* Dark purple for text */
+            --gray: #9e9e9e;         /* Gray text */
+            --success: #00c853;      /* Green for badges */
+            --table-header: #bbbff8; /* Light pink for headers */
+            --cell-bg: #ffffff;      /* White cell background */
+            --border-color: #8faff4; /* Pink border */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 182, 193, 0.3) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 192, 203, 0.3) 0%, transparent 20%);
+            background-attachment: fixed;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, rgba(7, 50, 61, 0.815), rgba(75, 27, 45, 0.3));
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(27, 131, 216, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            width: 150px;
+            height: 150px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: -30px;
+            left: -30px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+        
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .header-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--secondary);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .week-container {
+            margin-bottom: 40px;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(216, 27, 96, 0.15);
+            border: 1px solid var(--border-color);
+        }
+        
+        .week-header {
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 15px 20px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        
+        .week-header i {
+            margin-right: 10px;
+        }
+        
+        .week-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+        }
+        
+        .table-wrapper {
+            display: flex;
+            justify-content: center;
+            padding: 15px;
+        }
+        
+        table {
+            width: auto; /* Changed from 100% to auto */
+            max-width: 100%; /* Ensures it doesn't overflow on small screens */
+            border-collapse: separate;
+            border-spacing: 8px;
+        }
+        
+        th, td {
+            padding: 16px;
+            text-align: center;
+            border-radius: 12px;
+            background-color: var(--cell-bg);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            min-width: 120px; /* Ensures cells have a minimum width */
+        }
+        
+        th {
+            background-color: var(--table-header);
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 8px rgba(27, 115, 216, 0.2);
+        }
+        
+        td {
+            vertical-align: middle;
+            font-size: 0.9rem;
+        }
+        
+        tr:hover td {
+            background-color: #f5f7ff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(216, 27, 96, 0.15);
+        }
+        
+        td b {
+            color: var(--primary);
+            font-weight: 600;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .subject-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: white;
+            margin-top: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .subject-mt {
+            background-color: var(--primary);
+        }
+        
+        .subject-bi {
+            background-color: var(--secondary);
+        }
+        
+        .subject-rbt {
+            background-color: var(--accent);
+        }
+        
+        .subject-bm {
+            background-color: var(--success);
+        }
+        
+        .print-button {
+            display: block;
+            width: 200px;
+            margin: 30px auto;
+            padding: 14px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(216, 27, 96, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .print-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(216, 27, 96, 0.4);
+        }
+        
+        .print-button i {
+            margin-right: 8px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                color: black;
+                font-size: 12pt;
+            }
+            
+            .container {
+                width: 100%;
+                padding: 0;
+            }
+            
+            header {
+                background: none;
+                color: black;
+                padding: 20px 0;
+                box-shadow: none;
+                border-bottom: 2px solid var(--primary);
+            }
+            
+            .week-header {
+                background: var(--primary) !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .week-container {
+                margin-bottom: 20px;
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+            
+            .table-wrapper {
+                padding: 0;
+            }
+            
+            table {
+                page-break-inside: avoid;
+                border-spacing: 3px;
+                margin: 0 auto;
+            }
+            
+            th {
+                background-color: var(--table-header) !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                color: black !important;
+            }
+            
+            td {
+                background-color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .subject-badge {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .print-button {
+                display: none;
+            }
+            
+            footer {
+                display: none;
+            }
+            
+            @page {
+                size: A4;
+                margin: 1cm;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .week-header {
+                font-size: 1.2rem;
+            }
+            
+            .table-wrapper {
+                padding: 5px;
+                overflow-x: auto; /* Allows horizontal scrolling on small screens */
+            }
+            
+            table {
+                border-spacing: 4px;
+            }
+            
+            th, td {
+                padding: 10px 8px;
+                font-size: 0.8rem;
+                min-width: 100px;
+            }
+            
+            .subject-badge {
+                padding: 4px 8px;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-icon">
+                <img src="logoSekolah.png" style="width: 240px;">
+                <img src="logoMakmal.png" style="width: 240px;">
+            </div>
+            <h1>Jadual Makmal Komputer</h1>
+            <p>Tahun 2025</p>
+        </header>
+
+        <div class="week-container">
+            <div class="week-header">
+                <i class="fas fa-calendar-week"></i> Minggu 1
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Masa/Hari</th>
+                        <th>Isnin</th>
+                        <th>Selasa</th>
+                        <th>Rabu</th>
+                        <th>Khamis</th>
+                        <th>Jumaat</th>
+                    </tr>
+                    <tr>
+                        <td><b>07:40 AM - 08:40 AM</b></td>
+                        <td>
+                            <b>TAHUN 1 IBNU KHALDUN</b>
+                            <span class="subject-badge subject-mt">MT</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><b>09:10 AM - 10:10 AM</b></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <b>TAHUN 4 IBNU KHALDUN</b>
+                            <span class="subject-badge subject-rbt">RBT</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>10:00 AM - 11:00 AM</b></td>
+                        <td>
+                            <b>TAHUN 1 IBNU SINA</b>
+                            <span class="subject-badge subject-bi">BI</span>
+                        </td>
+                        <td>
+                            <b>TAHUN 1 IBNU BATTUTAH</b>
+                            <span class="subject-badge subject-bi">BI</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><b>10:30 AM - 11:30 AM</b></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <b>TAHUN 2 IBNU BATTUTAH</b>
+                            <span class="subject-badge subject-mt">MT</span>
+                        </td>
+                        <td>
+                            <b>TAHUN 3 IBNU SINA</b>
+                            <span class="subject-badge subject-mt">MT</span>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><b>11:00 AM - 12:00 PM</b></td>
+                        <td>
+                            <b>TAHUN 2 IBNU KHALDUN</b>
+                            <span class="subject-badge subject-mt">MT</span>
+                        </td>
+                        <td>
+                            <b>TAHUN 2 IBNU SINA</b>
+                            <span class="subject-badge subject-mt">MT</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><b>11:30 AM - 12:30 PM</b></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <b>TAHUN 3 IBNU KHALDUN</b>
+                            <span class="subject-badge subject-mt">MT</span>
+                        </td>
+                        <td>
+                            <b>TAHUN 3 IBNU BATTUTAH</b>
+                            <span class="subject-badge subject-mt">MT</span>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="week-container">
+            <div class="week-header">
+                <i class="fas fa-calendar-week"></i> Week 2
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Time</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                    </tr>
+                    <tr>
+                        <td><b>07:40 AM - 08:40 AM</b></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <b>TAHUN 1 IBNU KHALDUN</b>
+                            <span class="subject-badge subject-bm">BM</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>08:10 AM - 09:10 AM</b></td>
+                        <td>
+                            <b>TAHUN 4 IBNU SINA</b>
+                            <span class="subject-badge subject-rbt">RBT</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <b>TAHUN 6 IBNU SINA</b>
+                            <span class="subject-badge subject-rbt">RBT</span>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><b>09:10 AM - 10:10 AM</b></td>
+                        <td>
+                            <b>TAHUN 4 IBNU BATTUTAH</b>
+                            <span class="subject-badge subject-rbt">RBT</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <b>TAHUN 6 IBNU BATTUTAH</b>
+                            <span class="subject-badge subject-rbt">RBT</span>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><b>10:30 AM - 11:30 AM</b></td>
+                        <td></td>
+                        <td>
+                            <b>TAHUN 5 IBNU KHALDUN</b>
+                            <span class="subject-badge subject-rbt">RBT</span>
+                        </td>
+                        <td>
+                            <b>TAHUN 5 IBNU BATTUTAH</b>
+                            <span class="subject-badge subject-rbt">RBT</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><b>11:30 AM - 12:30 PM</b></td>
+                        <td></td>
+                        <td>
+                            <b>TAHUN 5 IBNU SINA</b>
+                            <span class="subject-badge subject-rbt">RBT</span>
+                        </td>
+                        <td>
+                            <b>TAHUN 6 IBNU KHALDUN</b>
+                            <span class="subject-badge subject-rbt">RBT</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="week-container">
+            <div class="week-header">
+                <i class="fas fa-calendar-week"></i> Week 3
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Time</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                    </tr>
+                    <tr>
+                        <td><b>09:10 AM - 10:10 AM</b></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <b>TAHUN 4 IBNU KHALDUN</b>
+                            <span class="subject-badge subject-bi">BI</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>10:00 AM - 11:00 AM</b></td>
+                        <td>
+                            <b>TAHUN 1 IBNU SINA</b>
+                            <span class="subject-badge subject-bm">BM</span>
+                        </td>
+                        <td>
+                            <b>TAHUN 1 IBNU BATTUTAH</b>
+                            <span class="subject-badge subject-bm">BM</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><b>10:30 AM - 11:30 AM</b></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <b>TAHUN 2 IBNU BATTUTAH</b>
+                            <span class="subject-badge subject-bm">BM</span>
+                        </td>
+                        <td>
+                            <b>TAHUN 3 IBNU SINA</b>
+                            <span class="subject-badge subject-bm">BM</span>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><b>11:00 AM - 12:00 PM</b></td>
+                        <td>
+                            <b>TAHUN 2 IBNU KHALDUN</b>
+                            <span class="subject-badge subject-bm">BM</span>
+                        </td>
+                        <td>
+                            <b>TAHUN 2 IBNU SINA</b>
+                            <span class="subject-badge subject-bm">BM</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><b>11:30 AM - 12:30 PM</b></td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <b>TAHUN 3 IBNU KHALDUN</b>
+                            <span class="subject-badge subject-bm">BM</span>
+                        </td>
+                        <td>
+                            <b>TAHUN 3 IBNU BATTUTAH</b>
+                            <span class="subject-badge subject-bm">BM</span>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="week-container">
+            <div class="week-header">
+                <i class="fas fa-calendar-week"></i> Week 4
+            </div>
+            <div class="table-wrapper">
+                <table>
+                    <tr>
+                        <th>Time</th>
+                        <th>Monday</th>
+                        <th>Tuesday</th>
+                        <th>Wednesday</th>
+                        <th>Thursday</th>
+                        <th>Friday</th>
+                    </tr>
+                    <tr>
+                        <td><b>08:10 AM - 09:10 AM</b></td>
+                        <td>
+                            <b>TAHUN 4 IBNU SINA</b>
+                            <span class="subject-badge subject-bi">BI</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <b>TAHUN 6 IBNU SINA</b>
+                            <span class="subject-badge subject-bi">BI</span>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><b>09:10 AM - 10:10 AM</b></td>
+                        <td>
+                            <b>TAHUN 4 IBNU BATTUTAH</b>
+                            <span class="subject-badge subject-bi">BI</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            <b>TAHUN 6 IBNU BATTUTAH</b>
+                            <span class="subject-badge subject-bi">BI</span>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><b>10:30 AM - 11:30 AM</b></td>
+                        <td></td>
+                        <td>
+                            <b>TAHUN 5 IBNU KHALDUN</b>
+                            <span class="subject-badge subject-bi">BI</span>
+                        </td>
+                        <td>
+                            <b>TAHUN 5 IBNU BATTUTAH</b>
+                            <span class="subject-badge subject-bi">BI</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td><b>11:30 AM - 12:30 PM</b></td>
+                        <td></td>
+                        <td>
+                            <b>TAHUN 5 IBNU SINA</b>
+                            <span class="subject-badge subject-bi">BI</span>
+                        </td>
+                        <td>
+                            <b>TAHUN 6 IBNU KHALDUN</b>
+                            <span class="subject-badge subject-bi">BI</span>
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <button class="print-button" onclick="window.print()">
+            <i class="fas fa-print"></i> Print to PDF
+        </button>
+        
+        <footer>
+            <p>Computer Lab Schedule • Generated on <span id="current-date"></span></p>
+        </footer>
+    </div>
+
+    <script>
+        // Display current date
+        document.getElementById('current-date').textContent = new Date().toLocaleDateString('en-US', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    </script>
+</body>
+</html>
